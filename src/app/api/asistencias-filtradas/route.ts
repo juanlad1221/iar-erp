@@ -23,7 +23,7 @@ export async function GET(request: Request) {
                     select: { idCurso: true }
                 });
                 
-                const cursoIds = preceptorCursos.map(ru => ru.idCurso).filter(Boolean);
+                const cursoIds = preceptorCursos.map((ru: { idCurso: number | null }) => ru.idCurso).filter(Boolean);
                 
                 if (cursoIds.length > 0) {
                     // Filtrar por alumnos que pertenecen a los cursos del preceptor
