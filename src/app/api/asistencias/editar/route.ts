@@ -12,7 +12,7 @@ export async function PATCH(request: Request) {
 
         const normalizedDate = new Date(`${fecha}T00:00:00Z`);
 
-        const updatedTotal = await prisma.$transaction(async (tx) => {
+        const updatedTotal = await prisma.$transaction(async (tx: any) => {
             let total = 0;
             for (const asig of asistencias) {
                 const idAlumno = parseInt(asig.id_alumno);
