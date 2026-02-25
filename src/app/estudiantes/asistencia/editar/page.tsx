@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Sidebar from '../../../components/Sidebar';
 import ThemeToggle from '../../../components/ThemeToggle';
@@ -22,7 +22,7 @@ interface AlumnoAsistencia {
     }[];
 }
 
-export default function EditAsistenciaPage() {
+function EditAsistenciaContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const normalizeFecha = (value: string | null) => {
@@ -529,5 +529,24 @@ export default function EditAsistenciaPage() {
                 }
             `}</style>
         </div>
+    );
+}
+
+function LoadingFallback() {
+    return (
+        <div className="students-container">
+            <Sidebar activePage="estudiantes" />
+            <main className="students-main">
+                <div style={{ padding: '40px', textAlign: 'center' }}>Cargando...</div>
+            </main>
+        </div>
+    );
+}
+
+export default function EditAsistenciaPage() {
+    return (
+        <Suspense fallback={<LoadingFallback />}>
+            <EditAsistenciaContent />
+        </Suspense>
     );
 }

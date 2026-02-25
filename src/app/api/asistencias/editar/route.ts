@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { TipoAsistencia } from '@prisma/client';
 
 export async function PATCH(request: Request) {
     try {
@@ -24,8 +23,8 @@ export async function PATCH(request: Request) {
                 };
 
                 if (asig.tipo_evento !== undefined && asig.tipo_evento) {
-                    updateData.tipo_evento = asig.tipo_evento as TipoAsistencia;
-                    createData.tipo_evento = asig.tipo_evento as TipoAsistencia;
+                    updateData.tipo_evento = asig.tipo_evento as string;
+                    createData.tipo_evento = asig.tipo_evento as string;
                 }
                 if (asig.hora_registro !== undefined) {
                     updateData.hora_registro = asig.hora_registro || null;
@@ -54,7 +53,7 @@ export async function PATCH(request: Request) {
                     update: updateData,
                     create: {
                         ...createData,
-                        tipo_evento: (createData.tipo_evento || 'Asistencia') as TipoAsistencia
+                        tipo_evento: (createData.tipo_evento || 'Asistencia') as string
                     }
                 });
                 total += 1;
