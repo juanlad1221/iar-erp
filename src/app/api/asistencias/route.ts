@@ -34,10 +34,10 @@ export async function GET(request: Request) {
             let retirosTotal = 0;
             
             
-            asistencias.forEach(asistencia => {
-                const isJustified = asistencia.justificacion === 'Justificado';
+            asistencias.forEach((item: any) => {
+                const isJustified = item.justificacion === 'Justificado';
                 
-                switch (asistencia.tipo_evento) {
+                switch (item.tipo_evento) {
                     case 'Inasistencia':
                         inasistenciasTotal += 1;
                         if (isJustified) {
