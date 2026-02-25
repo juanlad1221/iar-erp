@@ -37,7 +37,7 @@ export async function GET(request: Request) {
             }
             // Para otros roles, no filtrar (ver todo)
 
-            const asistencias = await prisma.asistencia.findMany({
+            const asis = await prisma.asistencia.findMany({
                 where: whereClause,
                 include: {
                     alumno: {
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
             const uniqueHistory: any[] = [];
             const seen = new Set<string>();
 
-            asistencias.forEach((item) => {
+            asis.forEach((item: any) => {
                 const curso = item.alumno?.curso;
                 const cursoId = curso?.id_curso;
                 if (!cursoId) return;
