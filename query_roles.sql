@@ -1,0 +1,1 @@
+SELECT id, rol FROM "Rol" ORDER BY id;

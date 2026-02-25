@@ -1,0 +1,225 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                       BigInt         @id @default(autoincrement())
+  created_at               DateTime       @default(now()) @db.Timestamptz(6)
+  IdDataPersonal           BigInt?
+  password                 String?        @map("password")
+  active                   Boolean?       @default(true) @map("active")
+  userName                 String?        @unique @map("userName")
+  Rol_usuario              Rol_usuario[]
+  Data_personal            Data_personal? @relation(fields: [IdDataPersonal], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  notificaciones_enviadas  Notificacion[] @relation("NotificacionRemitente")
+  notificaciones_recibidas Notificacion[] @relation("NotificacionDestinatario")
+
+  @@map("Users")
+}
+
+model Alumno {
+  id_alumno            Int                           @id @default(autoincrement())
+  id_persona           BigInt
+  legajo               String
+  estado               String
+  id_curso             Int?
+  persona              Data_personal                 @relation(fields: [id_persona], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnoTutors         Alumno_Tutor[]
+  curso                Curso?                        @relation(fields: [id_curso], references: [id_curso])
+  asistencias          Asistencia[]
+  detalles_evaluativos Detalle_insancia_evaluativa[]
+  active               Boolean?                      @default(true) @map("active")
+
+  @@map("Alumnos")
+}
+
+// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Data_personal {
+  id               BigInt    @id @default(autoincrement())
+  created_at       DateTime  @default(now()) @db.Timestamptz(6)
+  name             String?
+  lastName         String?
+  dni              String?
+  fecha_nacimiento DateTime? @db.Date
+  adress           String?
+  movil            String?
+  active           Boolean?  @default(true)
+  Users            User[]
+  Alumnos          Alumno[]
+  Tutores          Tutor[]
+  Docentes         Docente[]
+
+  @@map("Data personal")
+}
+
+model Tutor {
+  id_tutor   Int            @id @default(autoincrement())
+  id_persona BigInt
+  active     Boolean?       @default(true)
+  persona    Data_personal  @relation(fields: [id_persona], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  alumnos    Alumno_Tutor[]
+
+  @@map("Tutores")
+}
+
+model Alumno_Tutor {
+  id_alumno Int
+  id_tutor  Int
+  alumno    Alumno @relation(fields: [id_alumno], references: [id_alumno], onDelete: Cascade)
+  tutor     Tutor  @relation(fields: [id_tutor], references: [id_tutor], onDelete: Cascade)
+
+  @@id([id_alumno, id_tutor])
+  @@map("Alumno_Tutor")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Rol {
+  id                     BigInt         @id @default(autoincrement())
+  created_at             DateTime       @default(now()) @db.Timestamptz(6)
+  rol                    String?
+  Rol_usuario            Rol_usuario[]
+  notificaciones_destino Notificacion[] @relation("RolDestino")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Rol_usuario {
+  idRol   BigInt
+  idUser  BigInt
+  idCurso Int?   @map("id_curso") // Campo para relacionar con cursos (especialmente para preceptores)
+  Rol     Rol    @relation(fields: [idRol], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Users   User   @relation(fields: [idUser], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Curso   Curso? @relation("CursoPreceptor", fields: [idCurso], references: [id_curso], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([idRol, idUser])
+  @@map("Rol-usuario")
+}
+
+model Materia {
+  id_materia           Int                           @id @default(autoincrement())
+  nombre_materia       String
+  active               Boolean?                      @default(true)
+  asignaciones         Asignacion[]
+  detalles_evaluativos Detalle_insancia_evaluativa[]
+
+  @@map("Materias")
+}
+
+model Curso {
+  id_curso             Int                           @id @default(autoincrement())
+  anio                 Int
+  division             String
+  asignaciones         Asignacion[]
+  alumnos              Alumno[]
+  detalles_evaluativos Detalle_insancia_evaluativa[]
+  rol_usuarios         Rol_usuario[]                 @relation("CursoPreceptor")
+
+  @@map("Cursos")
+}
+
+model Docente {
+  id_docente           Int                           @id @default(autoincrement())
+  id_persona           BigInt
+  active               Boolean?                      @default(true)
+  persona              Data_personal                 @relation(fields: [id_persona], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  asignaciones         Asignacion[]
+  detalles_evaluativos Detalle_insancia_evaluativa[]
+
+  @@map("Docentes")
+}
+
+model Asignacion {
+  id_asignacion Int     @id @default(autoincrement())
+  id_materia    Int
+  id_curso      Int
+  id_docente    Int
+  materia       Materia @relation(fields: [id_materia], references: [id_materia])
+  curso         Curso   @relation(fields: [id_curso], references: [id_curso])
+  docente       Docente @relation(fields: [id_docente], references: [id_docente])
+
+  @@map("Asignaciones")
+}
+
+enum TipoAsistencia {
+  Asistencia
+  Tardanza
+  Retiro
+  Inasistencia
+}
+
+model Asistencia {
+  id_evento            Int            @id @default(autoincrement())
+  id_alumno            Int
+  fecha                DateTime       @db.Date
+  tipo_evento          TipoAsistencia
+  hora_registro        String?
+  observaciones        String?
+  justificacion        String? // "Justificado" o null
+  motivo_justificacion String? // Motivo específico de la justificación
+  alumno               Alumno         @relation(fields: [id_alumno], references: [id_alumno])
+
+  @@unique([id_alumno, fecha])
+  @@map("Asistencia")
+}
+
+model Detalle_insancia_evaluativa {
+  id_detalle_instancia Int                 @id @default(autoincrement())
+  nota                 Int?
+  id_alumno            Int?
+  id_materia           Int?
+  id_docente           Int?
+  id_instancia         Int
+  id_curso             Int? // nueva relación a Cursos
+  active               Boolean?            @default(true) @map("active")
+  alumno               Alumno?             @relation(fields: [id_alumno], references: [id_alumno])
+  materia              Materia?            @relation(fields: [id_materia], references: [id_materia])
+  docente              Docente?            @relation(fields: [id_docente], references: [id_docente])
+  instancia_evaluativa Insancia_evaluativa @relation(fields: [id_instancia], references: [id_instancia])
+  curso                Curso?              @relation(fields: [id_curso], references: [id_curso])
+
+  @@unique([id_instancia, id_alumno, id_materia]) // Evitar duplicados
+  @@map("Detalle_instancia_evaluativa")
+}
+
+model Insancia_evaluativa {
+  id_instancia       Int                           @id @default(autoincrement())
+  nombre             String
+  active             Boolean?                      @default(true) @map("active")
+  detalles_instancia Detalle_insancia_evaluativa[] // Relación inversa
+}
+
+model Notificacion {
+  id               Int         @id @default(autoincrement())
+  titulo           String
+  mensaje          String
+  fecha_creacion   DateTime    @default(now()) @db.Timestamptz(6)
+  fecha_expiracion DateTime?   @db.Timestamptz(6)
+  importancia      Importancia @default(BAJA)
+  leida            Boolean     @default(false)
+  activa           Boolean     @default(true)
+  id_remitente     BigInt?
+  id_rol_destino   BigInt?
+  id_destinatario  BigInt?
+  remitente        User?       @relation("NotificacionRemitente", fields: [id_remitente], references: [id])
+  destinatario     User?       @relation("NotificacionDestinatario", fields: [id_destinatario], references: [id])
+  rol_destino      Rol?        @relation("RolDestino", fields: [id_rol_destino], references: [id])
+
+  @@map("Notificaciones")
+}
+
+enum Importancia {
+  ALTA // Rojo - urgente
+  MEDIA // Naranja - importante  
+  BAJA // Verde - informativo
+}
+
+enum TipoNotificacion {
+  GENERAL // Notificaciones generales del sistema
+  INASISTENCIA // Por inasistencias
+  CALIFICACION // Por calificaciones nuevas
+  COMUNICADO // Comunicados escolares
+  RECORDATORIO // Recordatorios automáticos
+}

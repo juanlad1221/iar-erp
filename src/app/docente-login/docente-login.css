@@ -1,0 +1,537 @@
+.docente-login-container {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.docente-theme-toggle {
+    position: fixed;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    z-index: 1000;
+}
+
+/* Animated Background - Indigo/Violet Theme */
+.docente-login-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #6366f1 100%);
+}
+
+.docente-gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: docenteFloat 10s ease-in-out infinite;
+}
+
+.docente-orb-1 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.9) 0%, rgba(139, 92, 246, 0.4) 100%);
+    top: -80px;
+    left: -80px;
+    animation-delay: 0s;
+}
+
+.docente-orb-2 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.8) 0%, rgba(124, 58, 237, 0.4) 100%);
+    bottom: -120px;
+    right: -120px;
+    animation-delay: 3s;
+}
+
+.docente-orb-3 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(199, 210, 254, 0.7) 0%, rgba(99, 102, 241, 0.3) 100%);
+    top: 40%;
+    left: 60%;
+    animation-delay: 6s;
+}
+
+@keyframes docenteFloat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-20px) scale(1.05);
+    }
+}
+
+/* Login Card */
+.docente-login-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-3xl);
+    box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .docente-login-card {
+    background: rgba(24, 24, 42, 0.97);
+}
+
+/* Header */
+.docente-login-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.docente-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.docente-logo-image {
+    border-radius: 20px;
+    box-shadow: 0 12px 24px -8px rgba(99, 102, 241, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.docente-logo-image:hover {
+    transform: scale(1.05);
+}
+
+.docente-logo-text {
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.docente-login-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.docente-login-description {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    margin-top: var(--spacing-sm);
+    line-height: 1.5;
+}
+
+/* Form */
+.docente-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.docente-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.docente-form-label {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.docente-input-wrapper {
+    position: relative;
+}
+
+.docente-input-icon {
+    position: absolute;
+    left: var(--spacing-lg);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    color: #6366f1;
+    pointer-events: none;
+    transition: color 0.2s ease;
+}
+
+.docente-input-wrapper:focus-within .docente-input-icon {
+    color: #4f46e5;
+}
+
+.docente-input {
+    width: 100%;
+    padding: var(--spacing-lg) var(--spacing-lg);
+    padding-left: calc(var(--spacing-lg) + 34px);
+    font-size: 1.125rem;
+    font-family: inherit;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    outline: none;
+}
+
+.docente-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.docente-input::placeholder {
+    color: var(--text-tertiary);
+    font-weight: 400;
+}
+
+/* Error Message */
+.docente-error-message {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--error);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    animation: shakeError 0.5s ease-out;
+}
+
+@keyframes shakeError {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+/* Submit Button */
+.docente-btn-login {
+    width: 100%;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.docente-btn-login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.docente-btn-login:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+.docente-btn-login:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -8px rgba(99, 102, 241, 0.6);
+}
+
+.docente-btn-login:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.docente-btn-login:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.docente-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Footer */
+.docente-login-footer {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+}
+
+.docente-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.docente-back-link:hover {
+    color: #6366f1;
+}
+
+.docente-back-link svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.2s ease;
+}
+
+.docente-back-link:hover svg {
+    transform: translateX(-3px);
+}
+
+/* Info Box */
+.docente-info-box {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+}
+
+.docente-info-box svg {
+    width: 20px;
+    height: 20px;
+    color: #6366f1;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.docente-info-box p {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Decorative Elements */
+.docente-decorative-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.docente-shape {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    animation: docenteFloat 8s ease-in-out infinite;
+}
+
+.docente-shape-1 {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    top: 15%;
+    left: 8%;
+    animation-delay: 0s;
+}
+
+.docente-shape-2 {
+    width: 100px;
+    height: 100px;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    bottom: 20%;
+    left: 12%;
+    animation-delay: 2s;
+}
+
+.docente-shape-3 {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    top: 25%;
+    right: 8%;
+    animation-delay: 4s;
+}
+
+.docente-shape-4 {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    bottom: 15%;
+    right: 15%;
+    animation-delay: 1s;
+}
+
+/* Responsive Styles */
+@media (max-width: 640px) {
+    .docente-login-container {
+        padding: var(--spacing-md);
+        align-items: flex-start;
+        padding-top: 10vh;
+    }
+
+    .docente-login-card {
+        padding: var(--spacing-xl);
+        border-radius: var(--radius-xl);
+        max-width: 100%;
+    }
+
+    .docente-logo-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+    }
+
+    .docente-logo-text {
+        font-size: 1.5rem;
+    }
+
+    .docente-login-subtitle {
+        font-size: 0.9375rem;
+    }
+
+    .docente-input {
+        padding: var(--spacing-md) var(--spacing-md);
+        padding-left: calc(var(--spacing-md) + 32px);
+        font-size: 1rem;
+    }
+
+    .docente-input-icon {
+        left: var(--spacing-md);
+        width: 20px;
+        height: 20px;
+    }
+
+    .docente-btn-login {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 1rem;
+    }
+
+    .docente-theme-toggle {
+        top: var(--spacing-md);
+        right: var(--spacing-md);
+    }
+
+    .docente-gradient-orb {
+        filter: blur(60px);
+        opacity: 0.4;
+    }
+
+    .docente-orb-1 {
+        width: 200px;
+        height: 200px;
+    }
+
+    .docente-orb-2 {
+        width: 250px;
+        height: 250px;
+    }
+
+    .docente-orb-3 {
+        display: none;
+    }
+
+    .docente-shape {
+        display: none;
+    }
+}
+
+@media (max-width: 380px) {
+    .docente-login-container {
+        padding: var(--spacing-sm);
+        padding-top: 8vh;
+    }
+
+    .docente-login-card {
+        padding: var(--spacing-lg);
+    }
+
+    .docente-logo-image {
+        width: 52px;
+        height: 52px;
+    }
+
+    .docente-logo-text {
+        font-size: 1.375rem;
+    }
+}
+
+/* Safe area for notched devices */
+@supports (padding-top: env(safe-area-inset-top)) {
+    .docente-login-container {
+        padding-top: max(var(--spacing-lg), env(safe-area-inset-top));
+        padding-bottom: max(var(--spacing-lg), env(safe-area-inset-bottom));
+        padding-left: max(var(--spacing-lg), env(safe-area-inset-left));
+        padding-right: max(var(--spacing-lg), env(safe-area-inset-right));
+    }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .docente-login-container {
+        padding: var(--spacing-md);
+        align-items: flex-start;
+    }
+
+    .docente-login-card {
+        padding: var(--spacing-lg);
+    }
+
+    .docente-logo-container {
+        flex-direction: row;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .docente-logo-image {
+        width: 48px;
+        height: 48px;
+    }
+
+    .docente-login-description {
+        display: none;
+    }
+
+    .docente-info-box {
+        display: none;
+    }
+}
