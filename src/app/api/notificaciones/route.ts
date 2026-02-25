@@ -251,7 +251,6 @@ export async function POST(request: Request) {
                 titulo,
                 mensaje,
                 importancia: importancia || 'BAJA',
-                tipo: tipo || 'GENERAL',
                 id_destinatario: usuario_id_destino ? BigInt(usuario_id_destino) : null,
                 id_rol_destino: rol_destino ? BigInt(rol_destino) : null,
                 id_remitente: usuario_id_remitente ? BigInt(usuario_id_remitente) : BigInt(1),

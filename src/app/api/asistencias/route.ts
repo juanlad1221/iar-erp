@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { TipoAsistencia } from '@prisma/client';
 
 export async function GET(request: Request) {
     try {
@@ -215,7 +214,7 @@ export async function PUT(request: Request) {
             create: {
                 id_alumno: parseInt(id_alumno),
                 fecha: date,
-                tipo_evento: 'Inasistencia' as TipoAsistencia,
+                tipo_evento: 'Inasistencia',
                 justificacion: justificacion || null,
                 motivo_justificacion: motivo_justificacion || null
             }
@@ -269,7 +268,7 @@ export async function POST(request: Request) {
                     }
                 },
                 update: {
-                    tipo_evento: asig.tipo_evento as TipoAsistencia,
+                    tipo_evento: asig.tipo_evento,
                     hora_registro: asig.hora_registro || null,
                     observaciones: asig.observaciones || null,
                     justificacion: asig.justificacion || null,
@@ -278,7 +277,7 @@ export async function POST(request: Request) {
                 create: {
                     id_alumno: idAlumno,
                     fecha: date,
-                    tipo_evento: asig.tipo_evento as TipoAsistencia,
+                    tipo_evento: asig.tipo_evento,
                     hora_registro: asig.hora_registro || null,
                     observaciones: asig.observaciones || null,
                     justificacion: asig.justificacion || null,
