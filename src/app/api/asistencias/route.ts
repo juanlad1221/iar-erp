@@ -247,7 +247,7 @@ export async function POST(request: Request) {
             },
             select: { id_alumno: true }
         });
-        const existentesSet = new Set(existentes.map(e => e.id_alumno));
+        const existentesSet = new Set(existentes.map((e: any) => e.id_alumno));
         const yaTomadaParaCurso = await prisma.asistencia.count({
             where: {
                 fecha: date,
