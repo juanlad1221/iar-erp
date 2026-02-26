@@ -200,7 +200,7 @@ export async function POST(request: Request) {
             }));
 
             // 5. Enviar masivamente con transacción
-            const resultado = await prisma.$transaction(async (tx) => {
+            const resultado = await prisma.$transaction(async (tx: any) => {
                 const created = await tx.notificacion.createMany({
                     data: notificacionesData
                 });

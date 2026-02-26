@@ -128,7 +128,7 @@ export async function PATCH(
         const body = await request.json();
         const { name, lastName, dni, legajo, tutorIds, id_curso } = body;
 
-        const result = await prisma.$transaction(async (tx) => {
+        const result = await prisma.$transaction(async (tx: any) => {
             // 1. Get current student to get persona ID
             const student = await tx.alumno.findUnique({
                 where: { id_alumno: id },

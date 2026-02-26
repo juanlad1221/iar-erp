@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         }
 
         // Use a transaction to update relationships safely
-        await prisma.$transaction(async (tx) => {
+        await prisma.$transaction(async (tx: any) => {
             console.log(`Starting transaction for tutorId: ${tutorId}`);
 
             // 1. Remove all existing assignments for this tutor

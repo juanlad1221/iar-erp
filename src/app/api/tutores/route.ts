@@ -6,7 +6,7 @@ export async function POST(request: Request) {
         const body = await request.json();
         const { name, lastName, dni, adress, movil } = body;
 
-        const result = await prisma.$transaction(async (tx) => {
+        const result = await prisma.$transaction(async (tx: any) => {
             // @ts-ignore
             const dataPersonal = await tx.data_personal.create({
                 data: {

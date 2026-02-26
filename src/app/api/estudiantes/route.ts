@@ -14,7 +14,7 @@ export async function POST(request: Request) {
         
 
         // Start a transaction to ensure both records are created or none
-        const result = await prisma.$transaction(async (tx) => {
+        const result = await prisma.$transaction(async (tx: any) => {
             // 1. Create Data_personal record
             // @ts-ignore
             const dataPersonal = await tx.data_personal.create({
