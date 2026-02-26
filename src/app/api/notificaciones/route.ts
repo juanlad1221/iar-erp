@@ -226,7 +226,7 @@ export async function POST(request: Request) {
                     notificaciones: resultado.count,
                     rol: rol_destino,
                     responseTimeMs: responseTime,
-                    usuarios: usuariosConRol.map(u => ({
+                    usuarios: usuariosConRol.map((u: any) => ({
                         id: u.id.toString(),
                         nombre: u.Data_personal?.name,
                         apellido: u.Data_personal?.lastName

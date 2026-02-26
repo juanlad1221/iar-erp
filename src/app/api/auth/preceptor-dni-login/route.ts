@@ -51,7 +51,7 @@ export async function POST(request: Request) {
         
 
         // Extraer roles
-        const roles = userWithPersonalData.Rol_usuario.map(ru => ru.Rol.rol);
+        const roles = userWithPersonalData.Rol_usuario.map((ru: any) => ru.Rol.rol);
 
         // Verificar que tenga rol de preceptor
         if (!roles.includes('PRECEPTOR')) {

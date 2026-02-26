@@ -45,8 +45,8 @@ export async function GET(request: Request) {
 
             // Extraer los cursos de las relaciones
             cursos = preceptorRolUsuario
-                .filter(ru => ru.Curso) // Filtrar nulos
-                .map(ru => ru.Curso!);
+                .filter((ru: any) => ru.Curso)
+                .map((ru: any) => ru.Curso!);
 
         } else {
             // PARA OTROS ROLES: Obtener todos los cursos
@@ -69,12 +69,12 @@ export async function GET(request: Request) {
         }
 
         // Formatear los datos de manera consistente
-        const cursosFormateados = cursos.map(curso => ({
+        const cursosFormateados = cursos.map((curso: any) => ({
             id_curso: curso.id_curso,
             anio: curso.anio,
             division: curso.division,
             cantidad_alumnos: curso.alumnos.length,
-            alumnos: curso.alumnos.map(alumno => ({
+            alumnos: curso.alumnos.map((alumno: any) => ({
                 id_alumno: alumno.id_alumno,
                 legajo: alumno.legajo,
                 nombre: alumno.persona.name,

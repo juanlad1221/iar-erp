@@ -53,7 +53,7 @@ export async function GET(
         const serializedStudent = JSON.parse(JSON.stringify(student, (key, value) =>
             typeof value === 'bigint' ? value.toString() : value
         ));
-        const registros = (student.asistencias || []).map(a => ({
+        const registros = (student.asistencias || []).map((a: any) => ({
             fecha: a.fecha.toISOString().split('T')[0],
             evento: a.tipo_evento,
             justificada: a.justificacion === 'Justificado'
@@ -61,7 +61,7 @@ export async function GET(
         let total_inasistencia = 0;
         let total_tardanzas = 0;
         let total_retiros = 0;
-        (student.asistencias || []).forEach(a => {
+        (student.asistencias || []).forEach((a: any) => {
             if (a.tipo_evento === 'Inasistencia') total_inasistencia += 1;
             if (a.tipo_evento === 'Tardanza') total_tardanzas += 1;
             if (a.tipo_evento === 'Retiro') total_retiros += 1;

@@ -74,7 +74,7 @@ export async function POST(request: Request) {
                             curso: at.alumno.curso ? `${at.alumno.curso.anio}° ${at.alumno.curso.division}` : 'Sin curso'
                         }));
                     // Extraer solo los nombres de roles
-                    const roles = userActive?.Rol_usuario.map(ru => ({ id: ru.Rol.id.toString(), rol: ru.Rol.rol })) || [];
+                    const roles = userActive?.Rol_usuario.map((ru: any) => ({ id: ru.Rol.id.toString(), rol: ru.Rol.rol })) || [];
 
                     return NextResponse.json({
                         success: true,
@@ -124,7 +124,7 @@ export async function POST(request: Request) {
                 });
 
                 // Extraer solo los nombres de roles
-                const roles = userWithRoles?.Rol_usuario.map(ru => ru.Rol.rol) || [];
+                const roles = userWithRoles?.Rol_usuario.map((ru: any) => ru.Rol.rol) || [];
 
                 return NextResponse.json({
                     success: true,
