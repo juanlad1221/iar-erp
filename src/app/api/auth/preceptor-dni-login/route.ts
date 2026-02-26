@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         let preceptorRoleId: string | null = null;
         if (userWithPersonalData) {
             //console.log('userWithPersonalData:----++++++++++', userWithPersonalData);
-            const preceptorRole = userWithPersonalData.Rol_usuario.find(ru => ru.Rol?.rol === 'PRECEPTOR');
+            const preceptorRole = userWithPersonalData.Rol_usuario.find((ru: any) => ru.Rol?.rol === 'PRECEPTOR');
             if (preceptorRole) {
                 preceptorRoleId = preceptorRole.idRol?.toString?.() ?? String(preceptorRole.idRol);
             }
