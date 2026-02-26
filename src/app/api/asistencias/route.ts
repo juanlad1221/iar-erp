@@ -100,7 +100,7 @@ export async function GET(request: Request) {
             const uniqueHistory: any[] = [];
             const seen = new Set();
 
-            history.forEach(item => {
+            history.forEach((item: any) => {
                 const cursoId = item.alumno.curso?.id_curso;
                 if (!cursoId) return;
 
