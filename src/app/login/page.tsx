@@ -43,7 +43,7 @@ export default function LoginPage() {
         };
         console.log('Login - Roles disponibles:', data);
         const rawRole = data.user.roles[0];
-        const mappedRoleId = roleMap[rawRole] || '';
+        const mappedRoleId = roleMap[rawRole.toUpperCase()] || '';
 
         // Store auth state and roles
         localStorage.setItem('isAuthenticated', 'true');
