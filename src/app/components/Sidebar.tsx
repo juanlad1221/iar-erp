@@ -40,10 +40,11 @@ export default function Sidebar({ activePage }: SidebarProps) {
 
     // Definir qué items puede ver cada rol (usar claves normalizadas)
     const rolePermissions: Record<string, string[]> = {
-        'administrador': ['dashboard', 'estudiantes', 'docentes', 'tutores', 'cursos', 'materias', 'evaluacion', 'notificaciones', 'reportes'],
+        'administrador': ['dashboard', 'estudiantes', 'docentes', 'tutores', 'cursos', 'materias', 'evaluacion', 'notificaciones', 'reportes', 'usuarios'],
         'secretario': ['dashboard', 'estudiantes', 'docentes', 'tutores', 'cursos', 'materias', 'evaluacion', 'notificaciones'],
         'director': ['dashboard', 'estudiantes', 'docentes', 'tutores', 'cursos', 'materias', 'evaluacion', 'notificaciones', 'reportes'],
         'preceptor': ['estudiantes'],
+        'veedor': ['dashboard'],
     };
 
     // Definir qué sub-opciones están restringidas para ciertos roles (usar claves normalizadas)
@@ -67,16 +68,18 @@ export default function Sidebar({ activePage }: SidebarProps) {
         {
             id: 'dashboard',
             label: 'Dashboard',
-            href: '/home',
+            href: normalizedRole === 'veedor' ? '/veedor' : '/home',
             icon: (
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             ),
-            options: [
-                { label: 'General', href: '/home' },
-                { label: 'Estadísticas', href: '/home' }
-            ]
+            options: normalizedRole === 'veedor' 
+                ? [{ label: 'Panel Veedor', href: '/veedor' }]
+                : [
+                    { label: 'General', href: '/home' },
+                    { label: 'Estadísticas', href: '/home' }
+                ]
         },
         {
             id: 'estudiantes',
@@ -203,6 +206,21 @@ export default function Sidebar({ activePage }: SidebarProps) {
                 { label: 'Administrativos', href: '#' },
                 { label: 'Asistencia', href: '#' },
                 { label: 'Financieros', href: '#' }
+            ]
+        },
+        {
+            id: 'usuarios',
+            label: 'Usuarios',
+            href: '/usuarios',
+            icon: (
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 19.1571 16.1716C18.7357 15.4214 18.0609 15 17 15H7C5.93913 15 5.26434 15.4214 4.84289 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            ),
+            options: [
+                { label: 'Listado', href: '/usuarios' },
+                { label: 'Crear Persona', href: '/usuarios/persona/nueva' }
             ]
         },
     ];

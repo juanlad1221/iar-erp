@@ -34,7 +34,12 @@ export default function HomePage() {
             try {
                 const parsedRoles = JSON.parse(storedRoles);
                 setRoles(parsedRoles);
-                setActiveRole(storedActiveRole || parsedRoles[0] || '');
+                const active = storedActiveRole || parsedRoles[0] || '';
+                setActiveRole(active);
+                if (active.toLowerCase() === 'veedor') {
+                    router.push('/veedor');
+                    return;
+                }
             } catch (e) {
                 console.error("Error parsing roles", e);
             }
@@ -59,6 +64,9 @@ export default function HomePage() {
         setActiveRole(role);
         localStorage.setItem('activeRole', role);
         window.dispatchEvent(new Event('roleChanged'));
+        if (role.toLowerCase() === 'veedor') {
+            router.push('/veedor');
+        }
     };
 
     // Role-specific definitions
@@ -91,6 +99,13 @@ export default function HomePage() {
                     { label: 'Asistencia Hoy', value: '0%', change: '0%', icon: 'check' },
                     { label: 'Inasistencias del Mes', value: '0', change: '0%', icon: 'calendar' },
                     { label: 'Observaciones Pendientes', value: '0', change: '0%', icon: 'edit' },
+                ];
+            case 'veedor':
+                return [
+                    { label: 'Alumnos Totales', value: '-', change: 'Por curso', icon: 'users' },
+                    { label: 'Inasistencias', value: '-', change: 'Por curso', icon: 'calendar' },
+                    { label: 'Notas', value: '-', change: 'Por curso', icon: 'star' },
+                    { label: 'Cursos Activos', value: '-', change: 'Ver todos', icon: 'book' },
                 ];
             default:
                 return [

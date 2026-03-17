@@ -36,9 +36,10 @@ export default function LoginPage() {
         // Mapeo de nombres de rol a IDs según la base de datos
         const roleMap: { [key: string]: string } = {
           'ADMIN': '1',
-          'DOCENTE': '7',  // ID correcto para docentes según los datos
-          'TUTOR': '6',   // ID correcto para tutores según los datos
-          'PRECEPTOR': '4'
+          'DOCENTE': '7',
+          'TUTOR': '6',
+          'PRECEPTOR': '4',
+          'VEEDOR': '5'
         };
         console.log('Login - Roles disponibles:', data);
         const rawRole = data.user.roles[0];
